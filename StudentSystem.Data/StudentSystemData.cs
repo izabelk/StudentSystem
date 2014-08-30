@@ -63,6 +63,14 @@
                 {
                     type = typeof(StudentsRepository);
                 }
+                else if (typeOfModel.IsAssignableFrom(typeof(Homework)))
+                {
+                    type = typeof(HomeworksRepository);
+                }
+                else if (typeOfModel.IsAssignableFrom(typeof(Course)))
+                {
+                    type = typeof(CoursesRepository);
+                }
 
                 this.repositories.Add(typeOfModel, Activator.CreateInstance(type, this.context));
             }
