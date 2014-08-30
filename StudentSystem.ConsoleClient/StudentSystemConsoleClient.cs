@@ -17,16 +17,16 @@
 
             var data = new StudentSystemData();
 
-            //var student = new Student
-            //{
-            //    Name = "Simona Ilieva",
-            //    Age = 32,
-            //    Number = "0557688745656"
-            //};
+            var student = new Student
+            {
+                Name = "Simona Ilieva",
+                Age = 32,
+                Number = "0557688745656"
+            };
 
-            //data.Students.Add(student);
+            data.Students.Add(student);
 
-            //data.SaveChanges();
+            data.SaveChanges();
 
             var selectedStudent = data.Students.First();
             Console.WriteLine("First student in the database: ");
@@ -39,15 +39,18 @@
                 Age = 26,
                 Number = "8658685856858"
             };
-            
+
             var course1 = new Course
             {
                 Name = "High Quality Code",
                 Description = "Very important course",
-                Materials = new List<string>(){"books", "sites", "videos"},
+                Materials = new List<string>() { "books", "sites", "videos" },
             };
 
+            data.Students.Add(student1);
             student1.Courses.Add(course1);
+
+            data.SaveChanges();
 
             var course2 = new Course
             {
@@ -56,23 +59,32 @@
                 Materials = new List<string>() { "books", "sites", "videos" },
             };
 
+            data.Courses.Add(course2);
             student1.Courses.Add(course2);
+
+            data.SaveChanges();
 
             var homework1 = new Homework
             {
                 Content = "C# program",
-                TimeSent = new DateTime(2014, 8, 30)
+                TimeSent = new DateTime(2014, 8, 30),
+                CourseId = 1,
+                StudentId = 1
             };
 
-            student1.Homeworks.Add(homework1);
+            data.Homeworks.Add(homework1);
+
+            data.SaveChanges();
 
             var homework2 = new Homework
             {
                 Content = "Java program",
-                TimeSent = new DateTime(2014, 8, 31)
+                TimeSent = new DateTime(2014, 8, 31),
+                CourseId = 2,
+                StudentId = 2
             };
 
-            student1.Homeworks.Add(homework2);
+            data.Homeworks.Add(homework2);
 
             data.SaveChanges();
 
@@ -85,14 +97,15 @@
             }
             Console.WriteLine("------------------------------------------------");
 
-            var courses = data.Courses.SearchFor(c => c.Students.Contains(student1));
+            var courses = data.Courses.All();
 
-            Console.WriteLine("Filtered courses: ");
+            Console.WriteLine("Courses: ");
             foreach (var course in courses)
             {
                 Console.WriteLine("{0} {1}", course.Name, course.Description);
             }
             Console.WriteLine("------------------------------------------------");
+
         }
     }
 }
